@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let nomeUsuario = '';
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
-    nomeUsuario = payload.nome;
+    nomeUsuario = payload.name;
   } catch (erro) {
     console.error('Token inválido ou expirado:', erro);
     localStorage.removeItem('token');
