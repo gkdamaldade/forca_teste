@@ -8,11 +8,12 @@ function gerarCodigoSala(tamanho = 6) {
 }
 
 document.getElementById('btnCriar').addEventListener('click', () => {
-  const categoria = document.getElementById('categoria').value;
+//  const categoria = document.getElementById('categoria').value;
   const sala = gerarCodigoSala();
 
   // Jogador 1 (host) vai para tela de espera
-  window.location.href = `/pages/sessao_host.html?sala=${sala}&categoria=${categoria}`;
+  window.location.href = `/pages/sessao_host.html?sala=${sala}`
+//  window.location.href = `/pages/sessao_host.html?sala=${sala}&categoria=${categoria}`;
 });
 
 document.getElementById('btnEntrar').addEventListener('click', () => {
