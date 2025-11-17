@@ -1,17 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
   const token = localStorage.getItem('token');
 
-  // Verifica se o usuário está logado
   if (!token) {
     window.location.href = 'login.html';
     return;
   }
 
-  // Decodifica o token para extrair o nome do jogador
   let nomeUsuario = '';
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
-    nomeUsuario = payload.name;
+    nomeUsuario = payload.name || payload.nome || payload.username || '';
   } catch (erro) {
     console.error('Token inválido ou expirado:', erro);
     localStorage.removeItem('token');
@@ -19,30 +17,44 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // Saudação no topo
-  const saudacao = document.createElement('p');
-  saudacao.className = 'saudacao';
-  saudacao.textContent = `Olá, ${nomeUsuario}! Escolha uma categoria:`;
-  document.querySelector('.menu-container').prepend(saudacao);
+  const cont = document.querySelector('.menu-container');
+  if (cont) {
+    const p = document.createElement('p');
+    p.className = 'saudacao';
+    p.textContent = `Olá, ${nomeUsuario}! Escolha uma categoria:`;
+    cont.prepend(p);
+  }
 
-  // Lista de categorias
-  const categorias = [
-    'Animais',
-    'Frutas',
-    'Países',
-    'Esportes',
-    'Filmes',
-    'Profissões',
-    'Objetos',
-    'Cores'
-  ];
+  const categorias = ['Animais','Frutas','Países','Esportes','Filmes','Profissões','Objetos','Cores'];
 
-  // Preenche os botões
   const botoes = document.querySelectorAll('.grid-button');
   botoes.forEach((botao, i) => {
-    botao.textContent = categorias[i];
-    botao.addEventListener('click', () => {
-      window.location.href = `sessao_principal.html?categoria=${encodeURIComponent(categorias[i])}`;
+    if (!categorias[i]) return;
+    const categoria = categorias[i];
+    botao.textContent = categoria;
+
+    botao.addEventListener('click', async () => {
+      try {
+        const resp = await fetch('/api/salas', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            // Envie o token se a API exigir auth
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ categoria })
+        });
+
+        const data = await resp.json().catch(() => ({}));
+        if (!resp.ok) {
+          throw new Error(data?.message || `Erro ${resp.status}`);
+        }
+
+        const params = new URLSearchParams({ sala: data.sala, categoria: data.categoria });
+        window.location.href = `pages/sessao_host.html?${params.toString()}`;
+      } catch (e) {
+        alert(`Falha ao criar sala: ${e.message}`);
+      }
     });
   });
 });
