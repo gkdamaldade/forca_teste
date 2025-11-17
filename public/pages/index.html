@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8" http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
     <title>Sessão - Jogo da Forca</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="public/src/styles/sessao_principal.css">
@@ -26,9 +25,10 @@
 
     <div class="sessao-container">
         <div class="sessao-botoes">
-            <button class="sessao-botao" onclick="window.location.href='cadastro.html'">Cadastrar-se</button>
-            <button class="sessao-botao" onclick="window.location.href='login.html'">Entrar</button>
+            <button id="btnCadastro" class="sessao-botao">Cadastrar-se</button>
+            <button id="btnLogin" class="sessao-botao">Entrar</button>
         </div>
     </div>
+<script src="../src/js/main.js"></script>
 </body>
 </html>
