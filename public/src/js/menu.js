@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Decodifica o token para extrair o nome do usuário
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
+    console.log(payload);
     const nomeUsuario = payload.nome;
 
     // Cria e exibe saudação no topo do menu
