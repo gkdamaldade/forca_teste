@@ -24,11 +24,10 @@ body {
   font-family: Arial, sans-serif;
   color: white;
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-
   background: url("../../assets/images/background.png") center / cover no-repeat fixed;
   position: relative;
   overflow: hidden;
@@ -119,7 +118,6 @@ header {
   flex-direction: column;
   align-items: center;
   margin-top: 140px;
-
   background:
     linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.06));
   border: 2px solid var(--glass-brd);
