@@ -74,10 +74,8 @@ const io = new Server(server, { cors: { origin: '*' } });
 require('./socket/gameSocket')(io);
 
 // Inicialização do servidor
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+server.listen(PORT, () => {
+  console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });
-
-server.listen(PORT, () => console.log(`🚀 API ouvindo em ${PORT}`));
