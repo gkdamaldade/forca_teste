@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mensagemErro = document.getElementById('mensagem-erro');
 
     // ATENÇÃO: Verifique se esta URL do backend ainda é a correta na sua aba "PORTAS"
-    const BACKEND_URL = 'https://upgraded-space-umbrella-pj7jgrj7g755h66q-3000.app.github.dev';
+    // const BACKEND_URL = 'https://upgraded-space-umbrella-pj7jgrj7g755h66q-3000.app.github.dev';
 
     if (formCadastro) {
         formCadastro.addEventListener('submit', async (event) => {
@@ -22,14 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 // 3. Faz o 'fetch' para o novo endpoint
-                const response = await fetch(`${BACKEND_URL}/api/cadastro`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        username: username,
-                        email: email,
-                        password: password
-                    })
+                
+                const response = await fetch(`/api/cadastro`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ username, email, password })
+
                 });
 
                 const resultado = await response.json();
