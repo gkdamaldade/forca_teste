@@ -8,12 +8,13 @@ document.addEventListener("DOMContentLoaded", function()
       }
       const btnLogin = document.getElementById("btnLogin");
       if(btnLogin){
-         btnCadastro.addEventListener("click", function(){
+         btnLogin.addEventListener("click", function(){
           window.location.href = "login.html";
          });
       }
   });
         
                             
+
 
 
