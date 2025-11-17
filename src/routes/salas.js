@@ -1,6 +1,7 @@
 import express from 'express';
-import { Sala } from '../models/index.js'; // exporte Sala no seu models/index.js
+import { models } from '../models/index.js'; // exporte Sala no seu models/index.js
 const router = express.Router();
+const Sala = models.Sala;
 
 function gerarCodigo(n = 6) {
   // removendo O/0 e I/1 para evitar ambiguidade
