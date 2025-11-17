@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
     console.log(payload);
-    const nomeUsuario = payload.nome;
+    const nomeUsuario = payload.name;
 
     // Cria e exibe saudação no topo do menu
     const saudacao = document.createElement('p');
