@@ -54,4 +54,4 @@ router.delete('/salas/:codigo', async (req, res) => {
   return res.status(204).send();
 });
 
-export default router;
+module.exports = router;
