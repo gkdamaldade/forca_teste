@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router(); // exporte Sala no seu models/index.js
-const { Sala } = require('../models');
+const { models } = require('../models');
 const Sala = models.Sala;
 
 function gerarCodigo(n = 6) {
