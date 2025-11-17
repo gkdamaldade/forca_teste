@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const botoes = document.querySelectorAll('.grid-button');
   botoes.forEach((botao, i) => {
     if (!categorias[i]) return;
-    const categoria = categorias[i];
+    let categoria = categorias[i];
     botao.textContent = categoria;
 
     botao.addEventListener('click', async () => {
