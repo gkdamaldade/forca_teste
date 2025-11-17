@@ -7,7 +7,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const { Server } = require('socket.io');
 
-const api = require('./routes'); // Rotas principais (index.js)
+const api = require('./routes/index.js'); // Rotas principais (index.js)
 const salasRouter = require('./routes/salas'); // 
 const { errorHandler } = require('./middleware/error');
 const { sequelize } = require('./models');
