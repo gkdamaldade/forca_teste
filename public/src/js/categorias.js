@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const params = new URLSearchParams({ sala: data.sala, categoria: data.categoria });
-        window.location.href = `pages/sessao_host.html?${params.toString()}`;
+        window.location.href = `/public/pages/sessao_host.html?${params.toString()}`;
       } catch (e) {
         alert(`Falha ao criar sala: ${e.message}`);
       }
