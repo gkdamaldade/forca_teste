@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
   botoes.forEach((botao, i) => {
     botao.textContent = categorias[i];
     botao.addEventListener('click', () => {
-      window.location.href = `jogo.html?categoria=${encodeURIComponent(categorias[i])}`;
+      window.location.href = `sessao_principal.html?categoria=${encodeURIComponent(categorias[i])}`;
     });
   });
 });
