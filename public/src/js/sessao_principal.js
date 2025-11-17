@@ -21,8 +21,17 @@ document.addEventListener('DOMContentLoaded', () => {
     console.warn("Botão #btnCriar não encontrado na página.");
   }
 
-  // somos todos cabaços
   if (btnEntrar) {
+    btnEntrar.addEventListener('click', () => {
+      window.location.href = 'sessao_guest.html';
+    });
+  } else {
+    console.warn("Botão #btnEntrar não encontrado na página.");
+  }
+});
+
+  // somos todos cabaços
+/*  if (btnEntrar) {
     btnEntrar.addEventListener('click', () => {
       const inputCodigo  = document.getElementById('codigoSala');
       const selectCateg  = document.getElementById('categoria');
@@ -53,4 +62,4 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     console.warn("Botão #btnEntrar não encontrado na página.");
   }
-});
+});*/
