@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ranking - Jogo da Forca</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+  </style>
+
+  <link rel="stylesheet" href="../src/styles/ranking.css" />
+</head>
+<body>
+
+  <header>
+    <a href="menu.html" class="btn-voltar" aria-label="Voltar ao menu">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+
+    <div class="icon-img">
+      <img src="../assets/images/bob1.png" alt="Ícone Jogo da Forca">
+    </div>
+
+    <h1 class="fonte_titulo">RANKING</h1>
+
+    <div class="icon-img">
+      <img src="../assets/images/patrick1.png" alt="Ícone Jogo da Forca">
+    </div>
+  </header>
+
+  <main class="ranking-container">
+    <div id="ranking-list" class="ranking-list" aria-live="polite">
+      <div class="ranking-empty" hidden>
+        Ainda não há jogadores no ranking.
+      </div>
+    </div>
+
+  </main>
+
+  <template id="tpl-ranking-item">
+    <div class="ranking-item">
+      <span class="posicao"></span>
+      <span class="nome"></span>
+      <span class="pontuacao"></span>
+    </div>
+  </template>
+
+  <script>
+    // REMOVA este bloco quando o backend for ligar de verdade.
+    (function mock(){
+      const list = document.getElementById('ranking-list');
+      const tpl  = document.getElementById('tpl-ranking-item');
+
+      // Mock: crie 10 jogadores para mostrar visual
+      const data = Array.from({length: 10}, (_,i) => ({
+        pos: i+1,
+        name: `Jogador ${i+1}`,
+        wins: Math.floor(Math.random()*200)+10
+      }));
+
+      if (!data.length) {
+        list.querySelector('.ranking-empty')?.removeAttribute('hidden');
+        return;
+      }
+
+      const frag = document.createDocumentFragment();
+      data.slice(0,10).forEach((row,idx) => {
+        const node = tpl.content.firstElementChild.cloneNode(true);
+        node.querySelector('.posicao').textContent = `${row.pos}º`;
+        node.querySelector('.nome').textContent    = row.name;
+        node.querySelector('.pontuacao').textContent = `${row.wins} vitórias`;
+
+        // Destaques 1º, 2º, 3º já são estilizados via :nth-child no CSS
+        // Se quiser destacar o usuário logado:
+        // if (row.name === usuarioLogado) node.classList.add('destaque');
+
+        frag.appendChild(node);
+      });
+      list.appendChild(frag);
+    })();
+  </script>
+</body>
+</html>
