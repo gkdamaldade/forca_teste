@@ -18,7 +18,7 @@
 }
 
 *{ box-sizing: border-box; }
-html, body{ height: 100%; }
+/* html, body{ height: 100%; } */
 
 /* ===== Fundo (mesma imagem do menu) ===== */
 body{
@@ -27,7 +27,7 @@ body{
   font-family: Arial, sans-serif;
   color: white;
 
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   flex-direction: column;
   align-items: center;
