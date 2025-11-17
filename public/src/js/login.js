@@ -1,61 +1,66 @@
-// public/src/js/login.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Encontre o formulário
-    const formLogin = document.getElementById('form-login');
-    const mensagemErro = document.getElementById('mensagem-erro'); // (Opcional)
+  const formLogin = document.getElementById('form-login');
+  const mensagemErro = document.getElementById('mensagem-erro');
 
-    // A URL do seu backend
-    const BACKEND_URL = 'https://upgraded-space-umbrella-pj7jgrj7g755h66q-3000.app.github.dev';
+  if (!formLogin) {
+    console.error("Erro: <form id='form-login'> não foi encontrado.");
+    return;
+  }
 
-    if (formLogin) {
-        formLogin.addEventListener('submit', async (event) => {
-            event.preventDefault(); 
+  formLogin.addEventListener('submit', async (event) => {
+    event.preventDefault();
 
-            // 2. Pega os valores
-            const email = event.target.email.value;
-            const password = event.target.password.value;
-            
-            console.log("Frontend: Enviando dados de login...");
-            if (mensagemErro) mensagemErro.textContent = '';
+    const email = event.target.email.value.trim();
+    const password = event.target.password.value;
+    if (mensagemErro) mensagemErro.textContent = '';
 
-            try {
-                // 3. Faz o 'fetch' para o endpoint de login
-                const response = await fetch(`${BACKEND_URL}/api/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        email: email,
-                        password: password
-                    })
-                });
-
-                const resultado = await response.json();
-
-                if (!response.ok) { // Se for 401 ou 500
-                    throw new Error(resultado.message);
-                }
-                
-                // 4. SUCESSO!
-                console.log("Login bem-sucedido:", resultado);
-                
-                // 5. ESTE É O PASSO MAIS IMPORTANTE:
-                // Guarda o "passe" de login no navegador
-                localStorage.setItem('token', resultado.token);
-                // (Também podemos guardar os dados do usuário)
-                localStorage.setItem('user', JSON.stringify(resultado.user));
-
-                alert("Login realizado com sucesso! Bem-vindo!");
-                window.location.href = 'menu.html'; // Redireciona para o menu principal
-
-            } catch (error) {
-                console.error("Falha no login:", error.message);
-                if (mensagemErro) {
-                    mensagemErro.textContent = error.message;
-                } else {
-                    alert(`Erro: ${error.message}`);
-                }
-            }
-        });
+    if (!email || !password) {
+      const msg = 'Preencha e-mail e senha.';
+      mensagemErro ? mensagemErro.textContent = msg : alert(msg);
+      return;
     }
+
+    try {
+      // SAME-ORIGIN: sem BACKEND_URL
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        // Se a sua API usar cookie HttpOnly, descomente:
+        // credentials: 'include',
+        body: JSON.stringify({ email, password })
+      });
+
+      // Tenta extrair JSON mesmo quando não-ok
+      let payload = null;
+      try { payload = await response.json(); } catch {}
+
+      if (!response.ok) {
+        const msg = payload?.message || `Erro ${response.status}`;
+        throw new Error(msg);
+      }
+
+      // Sucesso
+      console.log('Login bem-sucedido:', payload);
+
+      // Se a API devolve token no corpo (padrão atual do seu cadastro/login)
+      if (payload?.token) {
+        localStorage.setItem('token', payload.token);
+      }
+      if (payload?.user) {
+        localStorage.setItem('user', JSON.stringify(payload.user));
+      }
+
+      alert('Login realizado com sucesso! Bem-vindo!');
+      window.location.href = 'menu.html';
+
+    } catch (error) {
+      const hint = error instanceof TypeError
+        ? ' (verifique conexão e se /api/login está acessível no mesmo domínio)'
+        : '';
+      const msg = `Falha no login: ${error.message}${hint}`;
+      console.error(msg);
+      mensagemErro ? (mensagemErro.textContent = msg) : alert(msg);
+    }
+  });
 });
