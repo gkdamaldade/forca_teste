@@ -1,111 +1,56 @@
 import express from 'express';
-import { Sala } from '../models'; // ✅ ADICIONE: importa o modelo Sequelize
-
-// descomente para exigir JWT e obter o hostId do token. precisa?
-// import jwt from 'jsonwebtoken';
-
+import { Sala } from '../models/index.js'; // exporte Sala no seu models/index.js
 const router = express.Router();
 
-/**
- * Função para gerar código único para a sala
- */
-function gerarCodigoSala(tamanho = 6) {
-  const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let codigo = '';
-  for (let i = 0; i < tamanho; i++) {
-    codigo += letras.charAt(Math.floor(Math.random() * letras.length));
-  }
-  return codigo;
+function gerarCodigo(n = 6) {
+  // removendo O/0 e I/1 para evitar ambiguidade
+  const a = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let s = '';
+  for (let i = 0; i < n; i++) s += a[Math.floor(Math.random() * a.length)];
+  return s;
 }
 
-/** (Opcional) middleware para validar JWT do Authorization: Bearer <token> */
-function authOptional(req, _res, next) {
-  const h = req.headers.authorization || '';
-  const token = h.startsWith('Bearer ') ? h.slice(7) : null;
-
-  if (!token) {
-    req.user = null;
-    return next();
-  }
-
+// POST /api/salas { categoria: string }  --> cria sala com código único
+router.post('/salas', async (req, res) => {
   try {
-    const secret = process.env.JWT_SECRET || 'dev-secret';
-    // const payload = jwt.verify(token, secret);
-    req.user = { id: null, name: null }; // ✅ MOCK: ajuste quando usar JWT real
-    return next();
-  } catch {
-    req.user = null;
-    return next();
-  }
-}
+    const { categoria } = req.body ?? {};
+    if (!categoria) return res.status(400).json({ message: 'Categoria é obrigatória.' });
 
-/**
- * ✅ SUBSTITUIR lógica do Map por DB
- * POST /api/salas
- * body: { categoria: string }
- * retorna: { sala: string, categoria: string }
- */
-router.post('/salas', authOptional, async (req, res) => {
-  const { categoria } = req.body ?? {};
-  if (!categoria || typeof categoria !== 'string') {
-    return res.status(400).json({ message: 'Categoria é obrigatória.' });
-  }
-
-  try {
-    // Gera código único verificando no banco
-    let codigo;
-    let existe;
-    do {
-      codigo = gerarCodigoSala();
-      existe = await Sala.findOne({ where: { codigo } });
-    } while (existe);
-
-    const hostId = req.user?.id ?? null;
-
-    const novaSala = await Sala.create({
-      codigo,
-      categoria,
-      hostId,
-      createdAt: new Date()
-    });
-
-    return res.status(201).json({ sala: novaSala.codigo, categoria: novaSala.categoria });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Erro ao criar sala.' });
+    for (let tent = 0; tent < 5; tent++) {
+      try {
+        const sala = await Sala.create({
+          codigo: gerarCodigo(),
+          categoria,
+          // host_user_id: req.user?.id  // quando você ativar JWT no backend
+        });
+        return res.status(201).json({ sala: sala.codigo, categoria: sala.categoria });
+      } catch (e) {
+        if (e?.name === 'SequelizeUniqueConstraintError') continue; // colisão, tenta novo código
+        console.error(e);
+        return res.status(500).json({ message: 'Erro interno' });
+      }
+    }
+    return res.status(503).json({ message: 'Falha ao gerar código único. Tente novamente.' });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ message: 'Erro interno' });
   }
 });
 
-/**
- * ✅ SUBSTITUIR lógica do Map por DB
- * GET /api/salas/:codigo
- */
+// GET /api/salas/:codigo  --> consulta sala
 router.get('/salas/:codigo', async (req, res) => {
   const codigo = (req.params.codigo || '').toUpperCase();
-  try {
-    const sala = await Sala.findOne({ where: { codigo } });
-    if (!sala) return res.status(404).json({ message: 'Sala não encontrada.' });
-    return res.json({ sala: sala.codigo, categoria: sala.categoria });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Erro ao buscar sala.' });
-  }
+  const sala = await Sala.findOne({ where: { codigo } });
+  if (!sala) return res.status(404).json({ message: 'Sala não encontrada.' });
+  return res.json({ sala: sala.codigo, categoria: sala.categoria, status: sala.status });
 });
 
-/**
- *  SUBSTITUIR lógica do Map por DB
- * DELETE /api/salas/:codigo
- */
+// DELETE /api/salas/:codigo --> encerra a sala (opcional)
 router.delete('/salas/:codigo', async (req, res) => {
   const codigo = (req.params.codigo || '').toUpperCase();
-  try {
-    const deletadas = await Sala.destroy({ where: { codigo } });
-    if (!deletadas) return res.status(404).json({ message: 'Sala não encontrada.' });
-    return res.status(204).send();
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Erro ao deletar sala.' });
-  }
+  const del = await Sala.destroy({ where: { codigo } });
+  if (!del) return res.status(404).json({ message: 'Sala não encontrada.' });
+  return res.status(204).send();
 });
 
 export default router;
