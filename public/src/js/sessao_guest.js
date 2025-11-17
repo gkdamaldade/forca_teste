@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let nome = '';
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
-    nome = payload.nome;
+    nome = payload.name;
   } catch (erro) {
     console.error('Token inválido:', erro);
     localStorage.removeItem('token');
