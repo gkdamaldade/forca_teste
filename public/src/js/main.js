@@ -4,15 +4,16 @@ document.addEventListener("DOMContentLoaded", function()
       if(btnCadastro){
         btnCadastro.addEventListener("click", function(){
           window.location.href = "cadastro.html";
-        };
+        });
       }
       const btnLogin = document.getElementById("btnLogin");
       if(btnLogin){
          btnCadastro.addEventListener("click", function(){
           window.location.href = "login.html";
-         };
+         });
       }
   });
         
                             
+
 
