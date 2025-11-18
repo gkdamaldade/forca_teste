@@ -268,8 +268,8 @@ async function redirecionarFim(tipo) {
 function atualizarBonecosUI() {
     // Garante que o índice da imagem não passe do limite (ex: bob6.png)
     // Usa min() para travar na imagem de "morto"
-    if(bonecoP1_El) bonecoP1_El.src = `../assets/images/bob${Math.min(errosP1 + 1, 7)}.png`;
-    if(bonecoP2_El) bonecoP2_El.src = `../assets/images/patrick${Math.min(errosP2 + 1, 7)}.png`;
+    if(bonecoP1_El) bonecoP1_El.src = `public/assets/images/bob${Math.min(errosP1 + 1, 7)}.png`;
+    if(bonecoP2_El) bonecoP2_El.src = `public/assets/images/patrick${Math.min(errosP2 + 1, 7)}.png`;
 }
 
 function atualizarPlacarDeVidas() {
