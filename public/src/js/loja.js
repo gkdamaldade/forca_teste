@@ -11,37 +11,37 @@ const habilidades = [
     preco: 2500,
     // Nota: O caminho foi ajustado, dependendo da estrutura final do projeto, 
     // ele pode precisar ser 'public/assets/...' ou '../assets/...'
-    imagem: "../assets/images/vida_extra.png"
+    imagem: "public/assets/images/vida_extra.png"
   },
   {
     nome: "Tirar vida",
     descricao: "Remove uma vida do adversário.",
     preco: 2500,
-    imagem: "../assets/images/Tirar_vida.png"
+    imagem: "public/assets/images/Tirar_vida.png"
   },
   {
     nome: "Ocultar letra",
     descricao: "Oculta uma letra correta da palavra.",
     preco: 2500,
-    imagem: "../assets/images/ocultar_letra.png"
+    imagem: "public/assets/images/ocultar_letra.png"
   },
   {
     nome: "Ocultar dica",
     descricao: "Remove a dica da rodada.",
     preco: 2500,
-    imagem: "../assets/images/ocultar_dica.png"
+    imagem: "public/assets/images/ocultar_dica.png"
   },
   {
     nome: "Liberar letra",
     descricao: "Revela uma letra correta da palavra.",
     preco: 2500,
-    imagem: "../assets/images/liberar_letra.png"
+    imagem: "public/assets/images/liberar_letra.png"
   },
   {
     nome: "Palpite",
     descricao: "Habilidade especial para virar o jogo.",
     preco: 2500,
-    imagem: "../assets/images/palpite.png"
+    imagem: "public/assets/images/palpite.png"
   }
 ];
 
