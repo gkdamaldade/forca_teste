@@ -54,15 +54,19 @@ let indiceAtual = 0;
 let moedasAtuais = 0; // Variável para rastrear o saldo atual.
 
 // Função auxiliar para obter/converter moedas do DOM
-function getSaldoMoedas() {
-    const moedasStr = document.getElementById('moedas-atual').textContent.replace(/\./g, '');
-    return parseInt(moedasStr) || 0;
+function carregarMoedasUsuario() {
+    // SIMULAÇÃO: 
+    // Garante que o valor inicial seja alto (e sem formatação de milhar) para o teste.
+    const saldoSimulado = localStorage.getItem('saldo_moedas') ? 
+                          parseInt(localStorage.getItem('saldo_moedas')) : 
+                          15000; // MUDANÇA: Coloque aqui o valor COMPLETO.
+    setSaldoMoedas(saldoSimulado);
 }
-
 // Função auxiliar para formatar e exibir moedas
 function setSaldoMoedas(saldo) {
     moedasAtuais = saldo;
     document.getElementById('moedas-atual').textContent = saldo.toLocaleString('pt-BR');
+    localStorage.setItem('saldo_moedas', saldo); 
 }
 
 /**
