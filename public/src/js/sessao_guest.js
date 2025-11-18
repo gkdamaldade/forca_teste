@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
       aoReceberEvento((evento) => {
         if (evento.tipo === 'preparacao') {
           window.location.href =
-            `/pages/sessao_preparacao.html?sala=${encodeURIComponent(sala)}&categoria=${encodeURIComponent(categoria)}`;
+            `sessao_preparacao.html?sala=${encodeURIComponent(sala)}&categoria=${encodeURIComponent(categoria)}`;
         }
       });
 
