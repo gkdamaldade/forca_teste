@@ -22,6 +22,12 @@ class Sala extends Model {
     this.hasMany(models.Player, { foreignKey: 'sala_id', as: 'players' });
     this.hasMany(models.Result, { foreignKey: 'sala_id', as: 'results' });
   }
+
+  static async buscarPorCodigo(codigo){
+    return await Sala.findOne({
+      where { codigo }
+  });
+  }
 }
 
 module.exports = Sala; // << importante: exporte a classe diretamente
