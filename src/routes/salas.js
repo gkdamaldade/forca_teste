@@ -41,7 +41,9 @@ router.post('/salas', async (req, res) => {
 // GET /api/salas/:codigo  --> consulta sala
 router.get('/salas/:codigo', async (req, res) => {
   const codigo = (req.params.codigo || '').toUpperCase();
+  console.log("Esse é o codigo:", codigo);
   const sala = await Sala.findOne({ where: { codigo } });
+  console.log("A sala é:", sala);
   if (!sala) return res.status(404).json({ message: 'Sala não encontrada.' });
   return res.json({ sala: sala.codigo, categoria: sala.categoria, status: sala.status });
 });
