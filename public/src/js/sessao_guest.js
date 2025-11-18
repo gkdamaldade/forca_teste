@@ -62,15 +62,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const inputCodigo = document.getElementById('codigo');
   const botaoEntrar = document.querySelector('.login-button');
 
+  let sala = '';
   botaoEntrar.addEventListener('click', async () => {
-    const sala = (inputCodigo.value || '').trim().toUpperCase();
+    const sala = (inputCodigo.value).trim().toUpperCase();
     if (!sala) {
       alert('Informe o código da sala.');
       return;
     }
 
     try {
-      const resp = await fetch(/api/salas/${encodeURIComponent(sala)});
+      const resp = await fetch(api/salas/${encodeURIComponent(sala)});
 
       if(!resp.ok) {
         alert("Sala não encontrada");
