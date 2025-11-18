@@ -33,7 +33,7 @@ class Word extends Model {
       // ATENÇÃO: Qual o nome da tabela no Supabase? 
       // Se for "words", mantenha. Se for "palavras", mude abaixo.
       // Vou assumir 'words' baseado no histórico, mas verifique.
-      tableName: 'words', 
+      tableName: 'palavra', 
       modelName: 'Word',
       // Se sua tabela NÃO tem as colunas createdAt/updatedAt, deixe false
       timestamps: false 
