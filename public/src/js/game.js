@@ -578,3 +578,50 @@ function lidarComChuteDeTecladoFisico(event) {
         processarChute(letra);
     }
 }
+// ... código existente ...
+
+// Adicione esta função auxiliar no final do arquivo ou junto com as outras
+async function salvarVitoriaNoBanco() {
+    // Recupera o usuário logado (que salvamos no login.js)
+    const userLogado = JSON.parse(localStorage.getItem('user'));
+    
+    if (!userLogado || !userLogado.email) {
+        console.warn("Nenhum usuário logado encontrado para salvar a vitória.");
+        return;
+    }
+
+    try {
+        console.log("Salvando vitória para:", userLogado.email);
+        await fetch(`${BACKEND_URL}/api/registrar-vitoria`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: userLogado.email }) // Envia o email
+        });
+        console.log("Vitória salva com sucesso!");
+    } catch (error) {
+        console.error("Erro ao salvar vitória:", error);
+    }
+}
+
+// --- ATUALIZE A FUNÇÃO checarFimDePartida ---
+
+function checarFimDePartida() {
+    if (vidasP1 === 0) {
+        // Jogador 1 perdeu -> Jogador 2 ganhou
+        // (Se o usuário logado for o Jogador 2, salvaríamos aqui)
+        console.log("FIM DE JOGO: Jogador 1 perdeu a partida!");
+        setTimeout(() => window.location.href = 'lost.html', 2000);
+        return true;
+
+    } else if (vidasP2 === 0) {
+        // Jogador 2 perdeu -> JOGADOR 1 GANHOU!
+        console.log("FIM DE JOGO: Jogador 1 venceu a partida!");
+        
+        // --- CHAMADA DA NOVA FUNÇÃO ---
+        salvarVitoriaNoBanco(); 
+        // ------------------------------
+
+        setTimeout(() => window.location.href = 'win.html', 2000);
+        return true;
+    }
+    // ... restante da função
