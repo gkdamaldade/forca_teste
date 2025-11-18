@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // 1. Importa a nova função
-const { iniciarNovoJogo, lidarComChute, lidarComPoder,lidarCadastro, lidarLogin } = require('../controller.js'); 
+const { iniciarNovoJogo, lidarComChute, lidarComPoder,lidarCadastro, lidarLogin, listarRanking, registrarVitoria } = require('../controller.js'); 
 
 /* --- ROTA PARA INICIAR O JOGO --- */
 router.get('/novo-jogo', (req, res) => {
@@ -91,5 +91,16 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ message: "Erro interno ao fazer login." });
     }
 });
+
+router.post('/registrar-vitoria', async (req, res) => {
+    try {
+        const resultado = await registrarVitoria(req.body);
+        res.status(200).json(resultado);
+    } catch (error) {
+        console.error("Erro ao registrar vitória:", error.message);
+        res.status(500).json({ message: "Erro ao salvar vitória." });
+    }
+});
+
 
 module.exports = router;
