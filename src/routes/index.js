@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // 1. Importa a nova função
-const { iniciarNovoJogo, lidarComChute, lidarComPoder,lidarCadastro, lidarLogin, listarRanking, registrarVitoria } = require('../controller.js'); 
+const { iniciarNovoJogo, lidarComChute, lidarComPoder,lidarCadastro, lidarLogin, listarRanking, registrarVitoria, lidarComTempoEsgotado } = require('../controller.js'); 
 
 /* --- ROTA PARA INICIAR O JOGO --- */
 router.get('/novo-jogo', (req, res) => {
@@ -110,5 +110,15 @@ router.get('/ranking', async (req, res) => {
         // ...
     }
 });
+
+router.post('/tempo-esgotado', (req, res) => {
+    try {
+        const novoEstado = lidarComTempoEsgotado();
+        res.status(200).json(novoEstado);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 
 module.exports = router;
