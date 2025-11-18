@@ -46,68 +46,12 @@
       <span class="pontuacao"></span>
     </div>
   </template>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const list = document.getElementById('ranking-list');
-      const tpl  = document.getElementById('tpl-ranking-item');
-      const emptyMsg = list.querySelector('.ranking-empty');
-
-      // Função para carregar dados reais do backend
-      async function carregarRanking() {
-        try {
-          // ATENÇÃO: Substitua '/api/ranking' pela rota real do seu backend
-          const response = await fetch('/api/ranking'); 
-          
-          if (!response.ok) {
-            throw new Error('Erro ao buscar ranking');
-          }
-
-          const data = await response.json();
-
-          // Limpa a lista (exceto a mensagem de vazio)
-          // Mantém a div .ranking-empty, remove o resto
-          Array.from(list.children).forEach(child => {
-            if (child !== emptyMsg) list.removeChild(child);
-          });
-
-          // Se não vier dados ou array vazio
-          if (!data || data.length === 0) {
-            emptyMsg.removeAttribute('hidden');
-            return;
-          } else {
-            emptyMsg.setAttribute('hidden', true);
-          }
-
-          const frag = document.createDocumentFragment();
-
-          // Itera sobre os dados do banco
-          data.forEach((row, index) => {
-            const node = tpl.content.firstElementChild.cloneNode(true);
-            
-            // Define a posição baseada no índice do array (0 vir 1º, etc)
-            node.querySelector('.posicao').textContent = `${index + 1}º`;
-            
-            // Mapeia as colunas do banco de dados (ajuste se seus nomes forem diferentes)
-            node.querySelector('.nome').textContent    = row.nome; 
-            node.querySelector('.pontuacao').textContent = `${row.vitorias} vitórias`;
-
-            frag.appendChild(node);
-          });
-
-          list.appendChild(frag);
-
-        } catch (error) {
-          console.error("Falha ao carregar ranking:", error);
-          // Opcional: Mostrar mensagem de erro na tela
-          emptyMsg.textContent = "Erro ao carregar o ranking.";
-          emptyMsg.removeAttribute('hidden');
-        }
-      }
-      // Inicia o carregamento
-      carregarRanking();
-    });
-  </script>
+<div class="ranking-container">
+    <div class="ranking-lista"></div> 
+</div>
+<script src="/public/src/js/ranking.js"></script>
 </body>
+ </body>
 
 </html>
+
