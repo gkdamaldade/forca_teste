@@ -30,10 +30,14 @@ class Player extends Model {
       vitorias: {
           type: DataTypes.INTEGER,
           defaultValue: 0
+      },
+      inventario: {
+        type: DataTypes.JSONB, 
+        defaultValue: []
       }
     },{
       sequelize,
-      tableName: 'usuario', // Garante que o nome da tabela está correto
+      tableName: 'usuario', 
       modelName: 'Player',
       timestamps: false
     });
