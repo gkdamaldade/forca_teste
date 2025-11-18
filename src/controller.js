@@ -189,11 +189,40 @@ async function lidarLogin(dados) {
     };
 }
 
+async function listarRanking() {
+    const ranking = await models.Player.findAll({
+        attributes: ['nome', 'vitorias'], // Busca 'vitorias' em vez de 'pontos'
+        order: [
+            ['vitorias', 'DESC'] // Ordena por quem tem mais vitórias
+        ],
+        limit: 10
+    });
+    return ranking;
+}
+
+async function registrarVitoria(dados) {
+    const { email } = dados; // Vamos identificar quem ganhou pelo email
+
+    if (!email) throw new Error("Email necessário para registrar vitória.");
+
+    const player = await models.Player.findOne({ where: { email: email } });
+    
+    if (player) {
+        // Incrementa 1 na coluna vitorias
+        await player.increment('vitorias');
+        return { mensagem: "Vitória registrada!", novasVitorias: player.vitorias + 1 };
+    } else {
+        throw new Error("Jogador não encontrado.");
+    }
+}
+
 
 module.exports = { 
     iniciarNovoJogo,
     lidarComChute,
     lidarComPoder,
     lidarCadastro,
-    lidarLogin
+    lidarLogin,
+    listarRanking,
+    registrarVitoria
 };
