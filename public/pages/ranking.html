@@ -6,11 +6,12 @@
   <title>Ranking - Jogo da Forca</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  
+  <link rel="stylesheet" href="/public/src/styles/ranking.css" />
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
   </style>
-
-  <link rel="stylesheet" href="public/src/styles/ranking.css" />
 </head>
 <body>
 
@@ -20,38 +21,20 @@
     </a>
 
     <div class="icon-img">
-      <img src="public/assets/images/bob1.png" alt="Ícone Jogo da Forca">
+      <img src="/public/assets/images/bob1.png" alt="Ícone Jogo da Forca">
     </div>
 
     <h1 class="fonte_titulo">RANKING</h1>
 
     <div class="icon-img">
-      <img src="public/assets/images/patrick1.png" alt="Ícone Jogo da Forca">
+      <img src="/public/assets/images/patrick1.png" alt="Ícone Jogo da Forca">
     </div>
   </header>
 
-  <main class="ranking-container">
-    <div id="ranking-list" class="ranking-list" aria-live="polite">
-      <div class="ranking-empty" hidden>
-        Ainda não há jogadores no ranking.
-      </div>
-    </div>
-
-  </main>
-
-  <template id="tpl-ranking-item">
-    <div class="ranking-item">
-      <span class="posicao"></span>
-      <span class="nome"></span>
-      <span class="pontuacao"></span>
-    </div>
-  </template>
-<div class="ranking-container">
+  <div class="ranking-container">
     <div class="ranking-lista"></div> 
-</div>
-<script src="/public/src/js/ranking.js"></script>
+  </div>
+
+  <script src="/public/src/js/ranking.js"></script>
 </body>
- </body>
-
 </html>
-
