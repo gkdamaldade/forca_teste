@@ -14,11 +14,7 @@ const socketHandler = require('./socketHandler');
 
 const app = express();
 const server = http.createServer(app); // <--- 3. Cria servidor HTTP explícito
-// teste
-app.use(express.static('public'));
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/pages/index.html')
-}) 
+
 
 // Configuração do CORS (Igual a antes, mas agora usada no Socket também)
 const corsOptions = {
