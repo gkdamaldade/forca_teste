@@ -156,30 +156,27 @@ async function processarChute(letra) {
         
         atualizarTela(dados);
         
-        // Se o jogo continua...
+        // --- NOVA LÓGICA DE TURNO ---
+        // Se o jogo continua, SEMPRE troca o turno (independente de acerto/erro)
         if (jogoEstaAtivo) {
-            // Lógica de derrota por dano excessivo
+            // Lógica de morte por dano excessivo (mantida)
             if (jogadorDaVez === 1 && errosP1 >= maxErrosP1) {
-                finalizarRound('derrota'); // P1 morreu
+                finalizarRound('derrota'); 
             } else if (jogadorDaVez === 2 && errosP2 >= maxErrosP2) {
-                finalizarRound('derrota'); // P2 morreu
-            } else if (dados.erros > errosBackend || !dados.palavra.includes(letra)) {
-                 // Se errou a letra (mesmo sem morrer), passa a vez?
-                 // Regra comum: Errou = Passa a vez. Acertou = Joga de novo.
-                 // Como o backend incrementa erro, podemos assumir que trocamos.
-                 trocarTurno();
+                finalizarRound('derrota'); 
             } else {
-                // Acertou: Reinicia timer e mantém a vez
-                iniciarTimer();
+                 // AQUI ESTÁ A MUDANÇA:
+                 // Não importa se acertou ou errou, passa a vez.
+                 trocarTurno();
             }
         }
 
     } catch (error) {
         console.error(error);
-        iniciarTimer(); // Tenta recuperar
+        // Se der erro na rede, tenta recuperar
+        iniciarTimer(); 
     }
 }
-
 async function processarPoder(poderId, jogador) {
     if (!jogoEstaAtivo) return;
     console.log(`Jogador ${jogador} usou poder: ${poderId}`);
