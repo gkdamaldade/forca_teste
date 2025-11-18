@@ -342,3 +342,26 @@ function lidarComChuteDeTecladoFisico(e) {
         if (btn && !btn.disabled) processarChute(letra);
     }
 }
+
+async function salvarVitoriaNoBanco() {
+    // Recupera o usuário logado
+    const userString = localStorage.getItem('user');
+    if (!userString) {
+        console.warn("Nenhum usuário logado.");
+        return;
+    }
+    const userLogado = JSON.parse(userString);
+    
+    console.log("Tentando salvar vitória para:", userLogado); // <--- Debug
+
+    if (!userLogado.email) {
+        console.error("ERRO: O usuário logado não tem email salvo no localStorage.");
+        return;
+    }
+
+    try {
+        // ... (resto do código igual)
+    } catch (error) {
+        console.error("Erro ao salvar vitória:", error);
+    }
+}
