@@ -102,5 +102,13 @@ router.post('/registrar-vitoria', async (req, res) => {
     }
 });
 
+router.get('/ranking', async (req, res) => {
+    try {
+        const ranking = await listarRanking();
+        res.status(200).json(ranking);
+    } catch (error) {
+        // ...
+    }
+});
 
 module.exports = router;
