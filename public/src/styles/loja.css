@@ -35,7 +35,7 @@ body {
   gap: 24px;
   background:
     linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.20)),
-    url("../../assets/images/background.png") center / cover no-repeat;
+    url("public/assets/images/background.png") center / cover no-repeat;
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
