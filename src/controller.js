@@ -185,7 +185,8 @@ async function lidarLogin(dados) {
     // O 'payload' é o que guardamos dentro do token
     const payload = {
         id: player.id,
-        nome: player.nome
+        nome: player.nome,
+        email: player.email
     };
 
     // Assina o token usando a chave secreta do .env
