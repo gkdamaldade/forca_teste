@@ -1,18 +1,26 @@
-
-const { DataTypes, Model } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 
 class Category extends Model {
   static initModel(sequelize) {
-    Category.init(
-      {
-        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-        name: { type: DataTypes.STRING(120), allowNull: false, unique: true },
-        slug: { type: DataTypes.STRING(120), allowNull: true, unique: true },
-        active: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true }
+    Category.init({
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
       },
-      { sequelize, modelName: 'Category', tableName: 'categories' }
-    );
+      name: {
+        type: DataTypes.STRING(120),
+        allowNull: false,
+        unique: true
+      }
+    }, {
+      sequelize,
+      tableName: 'categories', // Nome exato da tabela no Supabase
+      modelName: 'Category',
+      timestamps: true
+    });
     return Category;
   }
 }
+
 module.exports = Category;
