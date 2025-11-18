@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       // 🔍 Buscar categoria da sala
-      const resposta = await fetch(`/salas/${encodeURIComponent(sala)}`);
+      const resposta = await fetch(`/api/salas/${encodeURIComponent(sala)}`);
 
       if (!resposta.ok) {
         alert("Sala não encontrada.");
