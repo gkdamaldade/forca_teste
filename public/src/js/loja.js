@@ -164,27 +164,50 @@ function inicializarLoja() {
 
     // --- LISTENERS DO MODAL (SIMULAÇÃO DE COMPRA DE MOEDAS) ---
     
-    if(modalBtnConfirmar) modalBtnConfirmar.addEventListener('click', (e) => {
-        e.preventDefault();
-        const pacoteSelecionado = document.querySelector('input[name="pacote"]:checked');
-        
-        if (!pacoteSelecionado) {
-            alert('Selecione um pacote.');
+    if(btnComprar) btnComprar.addEventListener("click", async () => {
+        const item = habilidades[indiceAtual];
+        const userLogado = JSON.parse(localStorage.getItem('user'));
+
+        if (!userLogado || !userLogado.id) {
+            alert("Faça login para comprar.");
             return;
         }
 
-        // Pega o valor do pacote (Lógica simples baseada no DOM)
-        const pacoteBox = pacoteSelecionado.closest('.pacote').querySelector('.pacote-moedas');
-        const valorTexto = pacoteBox.textContent.replace(/[^0-9]/g, ''); // Remove tudo que não é número
-        const moedasGanha = parseInt(valorTexto);
+        // Desabilita o botão para evitar duplo clique
+        btnComprar.disabled = true;
+        btnComprar.textContent = "Processando...";
 
-        // TODO: Enviar para o backend para salvar no banco!
-        // Por enquanto, atualiza visualmente
-        const novoSaldo = moedasAtuais + moedasGanha;
-        setSaldoMoedas(novoSaldo);
-        alert(`Compra realizada! +${moedasGanha} moedas.`);
-        atualizarCard();
-        window.location.hash = ''; // Fecha modal
+        try {
+            const response = await fetch(`${BACKEND_URL}/api/comprar-item`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userId: userLogado.id,
+                    itemId: item.id,    // Ex: 'vida_extra'
+                    preco: item.preco   // Ex: 2500
+                })
+            });
+
+            const resultado = await response.json();
+
+            if (!response.ok) {
+                throw new Error(resultado.message || "Erro na compra");
+            }
+
+            // SUCESSO!
+            alert(`Sucesso! Você comprou: ${item.nome}`);
+            
+            // Atualiza o saldo na tela
+            setSaldoMoedas(resultado.novoSaldo);
+            
+            // Atualiza o estado do botão (se ainda tem saldo para comprar outro)
+            atualizarCard();
+
+        } catch (error) {
+            alert(`Erro: ${error.message}`);
+            // Reabilita o botão se deu erro
+            atualizarCard(); 
+        }
     });
 
     if(modalBtnCancelar) modalBtnCancelar.addEventListener('click', (e) => {
