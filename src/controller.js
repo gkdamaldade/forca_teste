@@ -131,10 +131,9 @@ async function lidarCadastro(dados) {
 
     // 2. Cria o novo jogador no banco
     const novoPlayer = await models.Player.create({
-        // CORREÇÃO AQUI: O banco espera 'name', não 'username'
         nome: username, 
         email: email,
-        password: hashedPassword
+        senha_hash: hashedPassword
     });
 
     console.log(`Controller: Novo jogador cadastrado - ${novoPlayer.name}`);
