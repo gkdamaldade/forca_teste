@@ -482,29 +482,6 @@ async function processarPoder(poderId, jogador) {
 }
 
 // --- 8. Funções Auxiliares de UI (Teclado, Vidas, Bonecos) ---
-
-function checarFimDePartida(roundAcabou) {
-    if (vidasP1 === 0) {
-        console.log("FIM DE JOGO: Jogador 1 perdeu a partida!");
-        jogoEstaAtivo = false;
-        clearInterval(timerInterval);
-        setTimeout(() => window.location.href = 'lost.html', 2000);
-        return true;
-    } else if (vidasP2 === 0) {
-        console.log("FIM DE JOGO: Jogador 2 perdeu a partida!");
-        jogoEstaAtivo = false;
-        clearInterval(timerInterval);
-        setTimeout(() => window.location.href = 'win.html', 2000);
-        return true;
-    }
-    
-    // Se o jogo não acabou, mas o round sim, inicia um novo
-    if (roundAcabou && jogoEstaAtivo === false) { 
-        setTimeout(iniciarNovaRodada, 2000);
-    }
-    return false;
-}
-
 function atualizarBonecosUI() {
     if (bonecoP1_El) {
         // Garante que não tentamos carregar 'bob9.png' se o max for 8 (erros 0-8)
