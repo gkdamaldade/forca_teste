@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const inputCodigo = document.getElementById('codigo');
   const botaoEntrar = document.querySelector('.login-button');
 
-  botaoEntrar.addEventListener('click', () => {
+  botaoEntrar.addEventListener('click', async () => {
     const sala = (inputCodigo.value || '').trim().toUpperCase();
     if (!sala) {
       alert('Informe o código da sala.');
