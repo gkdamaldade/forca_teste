@@ -1,36 +1,28 @@
 const { models, sequelize } = require('./models');
 
-/**
- * Busca uma palavra aleatória diretamente do banco de dados.
- */
 async function getNovaPalavra() {
-    console.log("Serviço: Buscando palavra no DB...");
+    console.log("Serviço: Buscando palavra na tabela única...");
 
     try {
-        // Busca 1 palavra, ordenada aleatoriamente, incluindo a Categoria
+        // Busca 1 linha aleatória da tabela 'words'
+        // (Opcional: Poderíamos filtrar onde usada = false)
         const wordData = await models.Word.findOne({
-            order: sequelize.random(), // Comando SQL para aleatório
-            include: [{
-                model: models.Category,
-                as: 'category',
-                attributes: ['name'] // Só precisamos do nome da categoria
-            }]
+            order: sequelize.random()
         });
 
         if (!wordData) {
-            console.warn("AVISO: Nenhuma palavra encontrada no banco! Usando fallback.");
-            return { palavra: "SUPABASE", categoria: "DEFAULT" };
+            console.warn("AVISO: Nenhuma palavra encontrada!");
+            return { palavra: "SUPABASE", categoria: "TESTE" };
         }
 
-        // Retorna no formato que o jogo espera
+        // Retorna os dados das colunas exatas da sua imagem
         return {
-            palavra: wordData.text.toUpperCase(),
-            categoria: wordData.category.name.toUpperCase()
+            palavra: wordData.palavra.toUpperCase(),
+            categoria: wordData.categoria.toUpperCase()
         };
 
     } catch (error) {
         console.error("Erro ao buscar palavra:", error);
-        // Fallback para o jogo não travar se o banco falhar
         return { palavra: "ERRO", categoria: "SISTEMA" };
     }
 }
