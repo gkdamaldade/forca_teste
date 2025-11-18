@@ -7,7 +7,7 @@ const Result = require('./Result');
 const Sala = require('./Sala');
 
 const models = {};
-models.Category = Category.initModel(sequelize);
+//models.Category = Category.initModel(sequelize);
 models.Word = Word.initModel(sequelize);
 models.Player = Player.initModel(sequelize);
 models.Result = Result.initModel(sequelize);
