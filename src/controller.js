@@ -246,6 +246,47 @@ async function obterDadosUsuario(id) {
     };
 }
 
+async function realizarCompra(dados) {
+    const { userId, itemId, preco } = dados;
+
+    // 1. Busca o usuário
+    const player = await models.Player.findByPk(userId);
+    
+    if (!player) throw new Error("Usuário não encontrado.");
+
+    // 2. Verifica o saldo
+    if (player.moedas < preco) {
+        throw new Error("Saldo insuficiente.");
+    }
+
+    // 3. Desconta as moedas
+    player.moedas -= preco;
+
+    // 4. Adiciona o item ao inventário
+    // Precisamos garantir que é um array antes de dar push
+    let inventarioAtual = player.inventario || [];
+    
+    // (Opcional: Se quiser impedir comprar item repetido, verifique aqui)
+    // if (inventarioAtual.includes(itemId)) throw new Error("Item já possuído.");
+
+    inventarioAtual.push(itemId);
+
+    // Atualiza o campo (Sequelize exige isso para campos JSON)
+    player.inventario = inventarioAtual;
+    player.changed('inventario', true); 
+
+    // 5. Salva no banco
+    await player.save();
+
+    console.log(`Compra: ${player.nome} comprou ${itemId} por ${preco}`);
+
+    return {
+        sucesso: true,
+        novoSaldo: player.moedas,
+        inventario: player.inventario,
+        mensagem: "Compra realizada com sucesso!"
+    };
+}
 
 
 module.exports = { 
@@ -257,5 +298,6 @@ module.exports = {
     listarRanking,
     registrarVitoria,
     lidarComTempoEsgotado,
-    obterDadosUsuario
+    obterDadosUsuario,
+    realizarCompra
 };
