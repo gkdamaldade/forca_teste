@@ -19,17 +19,28 @@ function iniciarNovoJogo() {
 }
 
 function lidarComChute(letra) {
-    if (!jogoAtual || jogoAtual.status !== "jogando") {
-        throw new Error("Não há jogo em andamento ou o jogo já acabou.");
-    }
+    //if (!jogoAtual || jogoAtual.status !== "jogando") {
+      //  throw new Error("Não há jogo em andamento ou o jogo já acabou.");
+   // }
 
-    console.log(`Controller: Processando chute '${letra}'`);
+    //console.log(`Controller: Processando chute '${letra}'`);
     
     jogoAtual.chutarLetra(letra);
 
     return jogoAtual.getEstado();
 }
 
+function lidarComTempoEsgotado() {
+    if (!jogoAtual || jogoAtual.status !== "jogando") {
+        throw new Error("Jogo não iniciado.");
+    }
+    
+    console.log("Tempo esgotado! Trocando turno...");
+    // Apenas troca o turno, sem penalidade de erro (ou adicione erro se preferir)
+    jogoAtual.trocarTurno();
+    
+    return jogoAtual.getEstado();
+}
 // --- NOVA FUNÇÃO DE PODER ---
 /**
  * Lida com a ativação de um poder
@@ -224,5 +235,6 @@ module.exports = {
     lidarCadastro,
     lidarLogin,
     listarRanking,
-    registrarVitoria
+    registrarVitoria,
+    lidarComTempoEsgotado
 };
