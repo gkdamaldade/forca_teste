@@ -4,7 +4,7 @@
  */
 
 // --- CONFIGURAÇÃO ---
-const BACKEND_URL = 'https://https://forcateste-production.up.railway.app';
+const BACKEND_URL = 'https://forcateste-production.up.railway.app';
 
 // Array de habilidades (dados visuais)
 const habilidades = [
