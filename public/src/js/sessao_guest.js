@@ -1,6 +1,6 @@
 import { conectarSocket, aoReceberEvento } from './socket.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const token = localStorage.getItem('token');
   if (!token) {
     window.location.href = 'login.html';
@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const inputCodigo = document.getElementById('codigo');
   const botaoEntrar = document.querySelector('.login-button');
+
+  
   const teste = await fetch('api/salas/'${encodeURIComponent(inputCodigo)});
   const dados = await teste.json();
   const categoria = dados.categoria;
