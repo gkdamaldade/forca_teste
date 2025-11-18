@@ -228,6 +228,25 @@ async function registrarVitoria(dados) {
     }
 }
 
+async function obterDadosUsuario(id) {
+    // Busca pelo Primary Key (ID)
+    const player = await models.Player.findByPk(id);
+    
+    if (!player) {
+        throw new Error("Usuário não encontrado.");
+    }
+
+    // Retorna os dados seguros (sem senha)
+    return {
+        id: player.id,
+        nome: player.nome,
+        email: player.email,
+        moedas: player.moedas,
+        vitorias: player.vitorias
+    };
+}
+
+
 
 module.exports = { 
     iniciarNovoJogo,
@@ -237,5 +256,6 @@ module.exports = {
     lidarLogin,
     listarRanking,
     registrarVitoria,
-    lidarComTempoEsgotado
+    lidarComTempoEsgotado,
+    obterDadosUsuario
 };
