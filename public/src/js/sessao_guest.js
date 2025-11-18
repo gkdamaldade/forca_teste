@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const botaoEntrar = document.querySelector('.login-button');
 
   
-  const teste = await fetch(api/salas/${encodeURIComponent(inputCodigo.value)});
+  const teste = await fetch(`/api/salas/${encodeURIComponent(inputCodigo.value)}`);
   const dados = await teste.json();
   const categoria = dados.categoria;
 
