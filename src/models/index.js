@@ -16,5 +16,6 @@ models.Sala = Sala.initModel(sequelize);
 Word.associate?.(models);
 Result.associate?.(models);
 models.Category.hasMany(models.Word, { foreignKey: 'category_id', as: 'words' });
+models.Word.belongsTo(models.Category, { foreignKey: 'category_id', as: 'category' });
 
 module.exports = { sequelize, models };
