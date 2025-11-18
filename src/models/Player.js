@@ -30,7 +30,7 @@ class Player extends Model {
       vitorias: {
           type: DataTypes.INTEGER,
           defaultValue: 0
-      }
+    },{
       sequelize,
       tableName: 'usuario', // Garante que o nome da tabela está correto
       modelName: 'Player',
