@@ -6,7 +6,6 @@ class Sala extends Model {
       {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         codigo: { type: DataTypes.STRING, allowNull: false, unique: true },
-        categoria: {type: DataTypes.STRING, allowNull: false},
       },
       {
         sequelize,
