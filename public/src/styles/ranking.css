@@ -86,10 +86,10 @@ body::after{
    ========================================= */
 header {
   width: 100%;
-  min-height: var(--header-min-h);           /* ★ ajuste */
-  padding: 20px 0;                            /* igual ao MENU */
+  min-height: var(--header-min-h);
+  padding: 48px 0 20px;
   display: flex;
-  align-items: center;                         /* alinha tudo verticalmente */
+  align-items: center;
   justify-content: center;
   gap: 20px;
   position: relative;
@@ -185,16 +185,15 @@ header {
   border: 2px solid var(--glass-brd);
   border-radius: 18px;
 
-  /* ★ ajuste: mais presença e largura total da coluna */
-  padding: 20px 28px;
-  width: 100%;                                   /* ocupa toda a coluna da lista */
+  padding: 16px 20px;
+  width: 100%;
 
   display: grid;
-  grid-template-columns: max-content 1fr max-content; /* pos | nome | pontos */
+  grid-template-columns: max-content 1fr max-content;
   align-items: center;
-  column-gap: 18px;
+  column-gap: 14px;
 
-  font-size: clamp(1.05rem, 2.6vw, 1.5rem);
+  font-size: clamp(0.9rem, 2.2vw, 1.25rem);
 
   box-shadow:
     0 12px 26px rgba(0,0,0,.28),

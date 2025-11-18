@@ -201,9 +201,9 @@ header {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 0 56px;  /* AUMENTEI esquerda/direita */
+  padding: 0 24px;
   box-sizing: border-box;
-  gap: 16px;
+  gap: 14px;
   font-family: "Orbitron", sans-serif;
 }
 
@@ -246,7 +246,7 @@ header {
 }
 
 .boneco img {
-  width: min(160px, 28vw);
+  width: min(140px, 24vw);
   height: auto;
   filter: drop-shadow(0 8px 20px rgba(0,0,0,.35));
 }
@@ -256,8 +256,8 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
-  margin-top: -36px; /* posiciona entre os bonecos */
+  gap: 12px;
+  margin-top: -20px;
   text-align: center;
 }
 
@@ -279,13 +279,13 @@ header {
 /* Palavras — MAIORES e SIMÉTRICAS (esq/dir) */
 .palavras {
   display: flex;
-  justify-content: space-between;   /* empurra cada palavra para uma extremidade */
+  justify-content: space-between;
   align-items: flex-start;
-  gap: 36px;
+  gap: 24px;
   width: 100%;
-  font-size: clamp(1.8rem, 6vw, 3.2rem); /* maior */
-  margin: 16px 0;
-  padding: 0 24px;
+  font-size: clamp(1.7rem, 5.6vw, 3rem);
+  margin: 8px 0;
+  padding: 0 16px;
 }
 .palavra{
   flex: 1;
@@ -297,6 +297,30 @@ header {
 }
 .palavra:last-child{
   text-align: right;                /* a sinalizada agora fica à direita */
+}
+
+/* ===== Responsivo extra ===== */
+@media (max-width: 1024px){
+  .jogo-container{ padding: 0 16px; gap: 12px; }
+  .jogo-top{ font-size: 1.6rem; }
+  .vidas{ gap: 8px; }
+  .boneco img{ width: min(120px, 22vw); }
+  .info-central{ margin-top: -16px; gap: 10px; }
+  .categoria{ font-size: clamp(1.2rem, 3vw, 1.8rem); }
+  .tempo{ font-size: clamp(1rem, 2.4vw, 1.4rem); }
+  .versus{ font-size: clamp(1.3rem, 3.4vw, 1.8rem); }
+  .palavras{ gap: 18px; font-size: clamp(1.4rem, 4.8vw, 2.6rem); margin: 6px 0; padding: 0 12px; }
+  .area-inferior{ gap: 10px; }
+  .poderes-jogador{ display:flex; justify-content:center; gap:10px; }
+  .poderes-jogador .poder img{ width: 36px; height: 36px; }
+  .teclado{ display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .linha-teclado{ display:flex; flex-wrap:wrap; justify-content:center; gap:8px; }
+  .tecla{ padding: 6px 10px; font-size: 14px; }
+}
+
+/* ===== Escala global para notebook ===== */
+@media (max-width: 1366px), (max-height: 900px){
+  .jogo-container{ transform: scale(.75); transform-origin: top center; }
 }
 
 /* Área inferior — PODERES + TECLADO MAIS PARA BAIXO */

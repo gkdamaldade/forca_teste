@@ -24,7 +24,7 @@ html, body { height: 100%; }
 
 body {
   margin: 0;
-  padding: 0 0 32px; /* respiro no rodapé */
+  padding: 0 0 32px;
   font-family: "Orbitron", sans-serif;
   color: var(--txt);
   height: 100vh;
@@ -37,7 +37,8 @@ body {
     linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.20)),
     url("../../assets/images/background.png") center / cover no-repeat;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* ===== Overlays ===== */
@@ -85,7 +86,7 @@ body::after {
  ========================================= */
 header {
   width: 100%;
-  padding: 20px 16px 0;
+  padding: 56px 16px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -101,11 +102,13 @@ header {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px; /* quase colado ao texto */
-  flex: 1;
+  gap: 6px;
   min-width: 0;
   white-space: nowrap;
   overflow: hidden;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .btn-voltar {
@@ -209,13 +212,15 @@ header {
 .loja-container {
   flex: 0 0 auto;
   align-self: center;
-  margin-top: 40px;
-  padding: 32px 40px;
+  margin-top: 28px;
+  margin-bottom: 56px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
-  width: min(1040px, 92vw);
+  gap: 10px;
+  width: min(820px, 80vw);
+  overflow: visible;
   border-radius: 18px;
   background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.06));
   border: 2px solid var(--glass-brd);
@@ -239,7 +244,7 @@ header {
   background: none;
   border: none;
   color: var(--txt);
-  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
   cursor: pointer;
   transition: transform .08s ease, filter .2s ease, color .2s ease;
   text-shadow: 0 6px 18px rgba(0,0,0,.45);
@@ -253,15 +258,15 @@ header {
     linear-gradient(180deg, var(--tile-bg), var(--tile-bg2));
   border: 2px solid var(--glass-brd);
   border-radius: 20px;
-  padding: clamp(20px, 4vw, 32px);
-  width: min(640px, 76vw);
-  min-height: 340px;
+  padding: clamp(14px, 2.4vw, 22px);
+  width: min(500px, 64vw);
+  min-height: 200px;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 14px;
+  gap: 8px;
   box-shadow:
     0 18px 40px rgba(0,0,0,.32),
     0 6px 0 rgba(0,0,0,.25);
@@ -288,22 +293,22 @@ header {
 .card img.poder,
 .card .poder img,
 .card img[alt*="poder" i] {
-  width: 100px !important;
-  height: 100px !important;
+  width: 84px !important;
+  height: 84px !important;
   object-fit: contain;
   image-rendering: auto;
   filter: drop-shadow(0 3px 8px rgba(0,0,0,28));
 }
 
 .habilidade-desc {
-  font-size: clamp(0.95rem, 2vw, 1.6rem);
+  font-size: clamp(0.85rem, 1.6vw, 1.2rem);
   max-width: 48ch;
-  line-height: 1.35;
+  line-height: 1.33;
   color: var(--txt-soft);
 }
 .preco {
-  font-size: clamp(1.05rem, 2.2vw, 1.6rem);
-  margin-bottom: 6px;
+  font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+  margin-bottom: 4px;
   color: var(--txt);
 }
 
@@ -315,14 +320,14 @@ header {
     linear-gradient(180deg, var(--aqua), var(--aqua-dark));
   color: white;
   border: none;
-  padding: 18px;
+  padding: 12px;
   font-weight: 800;
   border-radius: 50px;
-  font-size: 26px;
+  font-size: 20px;
   cursor: pointer;
   box-shadow: 0 10px 22px rgba(0,229,255,.28), 0 8px 0 rgba(0,0,0,.25);
   transition: filter .2s ease, transform .06s ease;
-  text-decoration: none; /* para o caso do .btn-modal (link) */
+  text-decoration: none;
   display: inline-block;
   text-align: center;
 }
@@ -615,7 +620,7 @@ header {
 
 /* ===== Responsividade geral ===== */
 @media (max-width: 980px){
-  .loja-container { width: min(96vw, 920px); padding: 28px 28px; }
+  .loja-container { width: min(96vw, 920px); padding: 20px 20px; }
 }
 @media (max-width: 640px){
   .loja-container { width: 94vw; padding: 24px 18px; gap: 20px; }

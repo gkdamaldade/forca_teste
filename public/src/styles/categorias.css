@@ -114,17 +114,16 @@ header {
 
 /* ===== Painel de vidro – FIXO em F11 ===== */
 .menu-container {
-  padding: 36px 32px;
+  padding: 30px 26px;
   border-radius: 18px;
   width: 90%;
-  max-width: 960px;          /* espaço para 3 colunas grandes */
+  max-width: 920px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 40px;
+  margin-top: 20px;
 
-  /* Altura mínima fixa (não estica na tela cheia) */
-  min-height: 560px;
+  min-height: 480px;
 
   background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.06));
   border: 2px solid var(--glass-brd);
@@ -135,7 +134,7 @@ header {
   backdrop-filter: blur(5px) saturate(1.05);
   -webkit-backdrop-filter: blur(5px) saturate(1.05);
 
-  z-index: 1; /* acima dos overlays */
+  z-index: 1;
 }
 
 /* ===== Grade 3×2 com última linha centralizada (Flexbox) ===== */
