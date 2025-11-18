@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      const resp = await fetch(api/salas/${encodeURIComponent(sala)});
+      const resp = await fetch('api/salas/'${encodeURIComponent(sala)});
 
       if(!resp.ok) {
         alert("Sala não encontrada");
