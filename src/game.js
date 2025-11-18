@@ -79,9 +79,9 @@ class Game {
         return this.erros >= Game.MAX_ERROS_BONECO;
     }
 
-     * NOVO MÉTODO: Poder "Mago Negro"
-     * Encontra a letra mais comum na palavra que AINDA não foi chutada.
-     */
+     //* NOVO MÉTODO: Poder "Mago Negro"
+     //* Encontra a letra mais comum na palavra que AINDA não foi chutada.
+     //*/
     revelarLetraMaisRepetida() {
         if (this.status !== 'jogando') return this.getEstado();
 
