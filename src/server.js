@@ -1,66 +1,61 @@
 require('dotenv').config();
-const path = require('path');
-const http = require('http');
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 const morgan = require('morgan');
-const { Server } = require('socket.io');
+const http = require('http'); // <--- 1. Necessário para o Socket.IO
+const { Server } = require('socket.io'); // <--- 2. Importa o Socket.IO
 
-const api = require('./routes/index.js'); // Rotas principais (index.js)
-const salasRouter = require('./routes/salas'); // 
+const api = require('./routes');
 const { errorHandler } = require('./middleware/error');
-const { sequelize } = require('./models');
+const { sequelize } = require('./db/sequelize');
+// Importamos o nosso novo gerenciador de sockets (vamos criar jajá)
+const socketHandler = require('./socketHandler'); 
 
 const app = express();
+const server = http.createServer(app); // <--- 3. Cria servidor HTTP explícito
 
-app.use(
-  helmet({
-    contentSecurityPolicy: false
-  })
-);
-app.use(cors({ origin: '*', optionsSuccessStatus: 200 }));
+// Configuração do CORS (Igual a antes, mas agora usada no Socket também)
+const corsOptions = {
+  origin: [
+      /github\.dev$/, 
+      'https://vinihideki.github.io',
+      'http://127.0.0.1:5500',
+      'http://localhost:5500'
+  ],
+  methods: ["GET", "POST"],
+  optionsSuccessStatus: 200
+};
+
+app.use(helmet());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(morgan('dev'));
 
-app.use("/public", express.static(path.join(__dirname, "../public")));
-app.use(express.static(path.join(__dirname, "../public/pages")));
-
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/pages/index.html"));
+// --- 4. CONFIGURAÇÃO DO SOCKET.IO ---
+const io = new Server(server, {
+    cors: corsOptions // Aplica as mesmas regras de CORS
 });
 
+// Inicia a lógica do Socket
+socketHandler(io);
+
+// Rotas HTTP (Login, Cadastro, Ranking continuam aqui)
+app.use('/api', api); 
 app.get('/health', (req, res) => res.json({ ok: true }));
-
-app.get('/api/teste-direto', (req, res) => {
-  res.status(200).json({ message: "O TESTE DIRETO NO SERVER.JS FUNCIONOU!" });
-});
-
-app.use('/api', api); // Rotas existentes
-app.use('/api', salasRouter); 
-
 app.use(errorHandler);
 
 (async () => {
   try {
     await sequelize.authenticate();
     console.log('✅ DB conectado.');
-    //await sequelize.sync({ alter: true }); // Em produção, use migrations
-    //console.log('✅ Modelos sincronizados com o DB.');
+    // await sequelize.sync({ alter: true }); // Lembre-se de deixar comentado se já existe
   } catch (err) {
     console.error('❌ Falha ao conectar no DB:', err);
   }
 })();
 
-
-const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: '*' } });
-
-
-require('./socket/gameSocket')(io);
-
-
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando na porta ${PORT}`);
-});
+
+// ATENÇÃO: Mudamos de 'app.listen' para 'server.listen'
+server.listen(PORT, () => console.log(`🚀 API + Socket ouvindo em ${PORT}`));
