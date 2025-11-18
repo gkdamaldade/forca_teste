@@ -9,7 +9,7 @@ class Player extends Model {
         primaryKey: true,
         autoIncrement: true
       },
-      name: {
+      nome: {
         type: DataTypes.STRING(120),
         allowNull: false
       },
@@ -19,15 +19,22 @@ class Player extends Model {
         allowNull: false // Assumindo que email também é obrigatório
       },
       // --- ADICIONE ESTE CAMPO ---
-      password: {
+      senha_hash: {
         type: DataTypes.STRING,
         allowNull: false
+      },
+      moedas: {
+          type: DataTypes.INTEGER,
+          defaultValue: 0
+      },
+      vitorias: {
+          type: DataTypes.INTEGER,
+          defaultValue: 0
       }
-      // ----------------------------
-    }, {
       sequelize,
-      tableName: 'players', // Garante que o nome da tabela está correto
-      modelName: 'Player'
+      tableName: 'usuario', // Garante que o nome da tabela está correto
+      modelName: 'Player',
+      timestamps: false
     });
     return Player;
   }
