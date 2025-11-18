@@ -14,7 +14,11 @@ const { sequelize } = require('./models');
 
 const app = express();
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false
+  })
+);
 app.use(cors({ origin: '*', optionsSuccessStatus: 200 }));
 app.use(express.json());
 app.use(morgan('dev'));
