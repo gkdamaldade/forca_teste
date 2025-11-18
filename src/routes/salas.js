@@ -46,7 +46,5 @@ router.get('/salas/:codigo', async (req, res) => {
   return res.json({ sala: sala.codigo, categoria: sala.categoria, status: sala.status });
 });
 
-  
-});
 
 module.exports = router;
