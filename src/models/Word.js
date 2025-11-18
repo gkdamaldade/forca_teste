@@ -8,23 +8,35 @@ class Word extends Model {
         primaryKey: true,
         autoIncrement: true
       },
-      text: {
-        type: DataTypes.STRING(120),
+      // Mapeando a coluna 'palavra' da sua imagem
+      palavra: {
+        type: DataTypes.STRING,
         allowNull: false
       },
-      category_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'categories',
-          key: 'id'
-        }
+      // Mapeando a coluna 'categoria' da sua imagem
+      categoria: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      // Mapeando 'dificuldade'
+      dificuldade: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      // Mapeando 'usada'
+      usada: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
       }
     }, {
       sequelize,
-      tableName: 'words', // Nome exato da tabela no Supabase
+      // ATENÇÃO: Qual o nome da tabela no Supabase? 
+      // Se for "words", mantenha. Se for "palavras", mude abaixo.
+      // Vou assumir 'words' baseado no histórico, mas verifique.
+      tableName: 'words', 
       modelName: 'Word',
-      timestamps: true
+      // Se sua tabela NÃO tem as colunas createdAt/updatedAt, deixe false
+      timestamps: false 
     });
     return Word;
   }
