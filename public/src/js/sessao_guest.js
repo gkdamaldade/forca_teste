@@ -69,8 +69,24 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    try {
+      const resp = await fetch(/api/salas/${encodeURIComponent(sala)});
+
+      if(!resp.ok) {
+        alert("Sala não encontrada");
+        return;
+      }
+
+      const dados = await resp.json();
+      const categoria = dados.categoria;
+
     // Categoria ainda NÃO é conhecida pelo guest
-    conectarSocket(sala, nome, null);
+    conectarSocket(sala, nome, categoria);
+    } catch (e) {
+      console.error("Erro ao consultar sala", e);
+      alert("Erro ao buscar a sala");
+    }
+  });
 
     aoReceberEvento((evento) => {
 
@@ -81,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const categoriaSala = evento.categoria;
 
         window.location.href =
-          `/public/pages/sessao_preparacao.html?sala=${encodeURIComponent(sala)}&categoria=${encodeURIComponent(categoriaSala)}`;
+          `/public/pages/sessao_preparacao.html?sala=${encodeURIComponent(sala)}&categoria=${encodeURIComponent(evento.categoria)}`;
       }
     });
   });
