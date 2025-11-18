@@ -22,7 +22,7 @@ aoReceberEvento((evento) => {
   if (evento.tipo === 'pronto') {
     jogadoresProntos.add(evento.nome);
     if (jogadoresProntos.size === 2) {
-      window.location.href = `/pages/game.html?sala=${sala}&categoria=${categoria}`;
+      window.location.href = `game.html?sala=${sala}&categoria=${categoria}`;
     }
   }
 });
