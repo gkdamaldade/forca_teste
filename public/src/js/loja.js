@@ -40,13 +40,13 @@ document.addEventListener('DOMContentLoaded', () => {
       nome: 'Tempo Extra',
       descricao: 'Adiciona 30 segundos ao tempo de jogo.',
       preco: 15,
-      imagem: '../assets/images/poder_tempo.png'
+      imagem: 'public/assets/images/poder_tempo.png'
     },
     {
       nome: 'Pular Palavra',
       descricao: 'Troca a palavra atual por uma nova.',
       preco: 20,
-      imagem: '../assets/images/poder_pular.png'
+      imagem: 'public/assets/images/poder_pular.png'
     }
   ];
 
