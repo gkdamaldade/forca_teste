@@ -1,6 +1,6 @@
 
 const { sequelize } = require('../db/sequelize');
-const Category = require('./Category');
+//const Category = require('./Category');
 const Word = require('./Word');
 const Player = require('./Player');
 const Result = require('./Result');
@@ -13,9 +13,9 @@ models.Player = Player.initModel(sequelize);
 models.Result = Result.initModel(sequelize);
 models.Sala = Sala.initModel(sequelize);
 
-Word.associate?.(models);
-Result.associate?.(models);
-models.Category.hasMany(models.Word, { foreignKey: 'category_id', as: 'words' });
-models.Word.belongsTo(models.Category, { foreignKey: 'category_id', as: 'category' });
+//Word.associate?.(models);
+//Result.associate?.(models);
+//models.Category.hasMany(models.Word, { foreignKey: 'category_id', as: 'words' });
+//models.Word.belongsTo(models.Category, { foreignKey: 'category_id', as: 'category' });
 
 module.exports = { sequelize, models };
