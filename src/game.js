@@ -6,7 +6,8 @@ class Game {
         this.categoria = categoria;
         this.letrasChutadas = new Set();
         this.erros = 0;
-        this.status = "jogando"; // "jogando", "vitoria", "derrota"
+        this.status = "jogando";
+        this.turn = 1;// "jogando", "vitoria", "derrota"
     }
 
     getPalavraParaExibir() {
@@ -48,6 +49,23 @@ class Game {
         }
     }
 
+    trocarTurno() {
+        this.turn = (this.turn === 1) ? 2 : 1;
+        console.log(`Turno trocado para Jogador ${this.turn}`);
+        return this.getEstado();
+    }
+
+    getEstado() {
+        return {
+            palavra: this.getPalavraParaExibir(),
+            erros: this.erros,
+            letrasChutadas: Array.from(this.letrasChutadas),
+            status: this.status,
+            categoria: this.categoria,
+            turn: this.turn // <--- Envia o turno atual para o frontend
+        };
+    }
+
     checarVitoria() {
         for (const letra of this.palavraSecreta) {
             if (letra !== ' ' && !this.letrasChutadas.has(letra)) {
@@ -61,17 +79,6 @@ class Game {
         return this.erros >= Game.MAX_ERROS_BONECO;
     }
 
-    getEstado() {
-        return {
-            palavra: this.getPalavraParaExibir(),
-            erros: this.erros,
-            letrasChutadas: Array.from(this.letrasChutadas),
-            status: this.status,
-            categoria: this.categoria
-        };
-    }
-
-    /**
      * NOVO MÉTODO: Poder "Mago Negro"
      * Encontra a letra mais comum na palavra que AINDA não foi chutada.
      */
