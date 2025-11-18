@@ -48,10 +48,16 @@ router.get('/salas/:codigo', async (req, res) => {
 
 // DELETE /api/salas/:codigo --> encerra a sala (opcional)
 router.delete('/salas/:codigo', async (req, res) => {
-  const codigo = (req.params.codigo || '').toUpperCase();
-  const del = await Sala.destroy({ where: { codigo } });
-  if (!del) return res.status(404).json({ message: 'Sala não encontrada.' });
-  return res.status(204).send();
+  const codigo = req.params.codigo.trim().toUpperCase();
+  const sala = await Sala.findOne({ where: { codigo } });
+  if (!sala) {
+    return res.status(404).json({ message: 'Sala não encontrada.' });
+  }
+  return res.json({
+      codigo: sala.codigo,
+      categoria: sala.categoria
+  });
+  
 });
 
 module.exports = router;
