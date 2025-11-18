@@ -132,7 +132,7 @@ async function lidarCadastro(dados) {
     // 2. Cria o novo jogador no banco
     const novoPlayer = await models.Player.create({
         // CORREÇÃO AQUI: O banco espera 'name', não 'username'
-        name: username, 
+        nome: username, 
         email: email,
         password: hashedPassword
     });
@@ -163,14 +163,14 @@ async function lidarLogin(dados) {
     }
 
     // 2. Compara a senha enviada com a senha "hasheada" no banco
-    const match = await bcrypt.compare(password, player.password);
+    const match = await bcrypt.compare(password, player.senha_hash);
     if (!match) {
         // Senha errada
         throw new Error("Credenciais inválidas.");
     }
 
     // 3. SUCESSO! Crie o Token
-    console.log(`Controller: Jogador '${player.name}' logado com sucesso.`);
+    console.log(`Controller: Jogador '${player.nome}' logado com sucesso.`);
     
     // O 'payload' é o que guardamos dentro do token
     const payload = {
