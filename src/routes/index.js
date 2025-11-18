@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // 1. Importa a nova função
-const { iniciarNovoJogo, lidarComChute, lidarComPoder,lidarCadastro, lidarLogin, listarRanking, registrarVitoria, lidarComTempoEsgotado } = require('../controller.js'); 
+const { iniciarNovoJogo, lidarComChute, lidarComPoder,lidarCadastro, lidarLogin, listarRanking, registrarVitoria, lidarComTempoEsgotado, obterDadosUsuario } = require('../controller.js'); 
 
 /* --- ROTA PARA INICIAR O JOGO --- */
 router.get('/novo-jogo', (req, res) => {
@@ -117,6 +117,17 @@ router.post('/tempo-esgotado', (req, res) => {
         res.status(200).json(novoEstado);
     } catch (error) {
         res.status(500).json({ message: error.message });
+    }
+});
+
+router.get('/usuario/:id', async (req, res) => {
+    try {
+        const { id } = req.params; // Pega o ID da URL
+        const dados = await obterDadosUsuario(id);
+        res.status(200).json(dados);
+    } catch (error) {
+        console.error("Erro ao buscar usuário:", error.message);
+        res.status(404).json({ message: "Erro ao buscar dados." });
     }
 });
 
