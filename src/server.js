@@ -41,8 +41,8 @@ app.use(errorHandler);
   try {
     await sequelize.authenticate();
     console.log('✅ DB conectado.');
-    await sequelize.sync({ alter: true }); // Em produção, use migrations
-    console.log('✅ Modelos sincronizados com o DB.');
+    //await sequelize.sync({ alter: true }); // Em produção, use migrations
+    //console.log('✅ Modelos sincronizados com o DB.');
   } catch (err) {
     console.error('❌ Falha ao conectar no DB:', err);
   }
