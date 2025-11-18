@@ -18,7 +18,7 @@ const poderesP2Container = document.querySelector('.area-inferior .poderes-jogad
 
 // --- 2. CONFIGURAÇÃO ---
 // Use a URL do seu ambiente (Codespaces ou Render)
-const BACKEND_URL = 'https://upgraded-space-umbrella-pj7jgrj7g755h66q-3000.app.github.dev';
+const BACKEND_URL = 'https://forcateste-production.up.railway.app';
 
 // Simulação de Poderes Equipados (Isso viria do banco futuramente)
 const poderP1 = 'orochimaru'; // P1: Vida Extra
