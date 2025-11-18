@@ -47,6 +47,10 @@ class Game {
             }
             return "erro";
         }
+        if (this.status === "jogando"){
+            this.trocarTurno();
+        }
+        return resultado;
     }
 
     trocarTurno() {
