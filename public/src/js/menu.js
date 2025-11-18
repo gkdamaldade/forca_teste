@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
         const payload = JSON.parse(atob(token.split('.')[1]));
-        const nomeUsuario = payload.name;
+        const nomeUsuario = payload.nome;
 
         const saudacao = document.createElement('p');
         saudacao.className = 'saudacao';
